@@ -1,0 +1,161 @@
+.backgroundimage {
+  width: 900px;
+  height: 400px;
+
+
+}
+.container {
+  position: relative;
+}
+.title {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  /* 设置文字样式 */
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  font-family:'kaiti';
+
+}
+.exchange{
+  position: absolute;
+  top: 60px;
+  left: 365px;
+  font-size: 5px;
+  color: rgb(253, 249, 249);
+}
+.custom-checkbox {
+  appearance: none;
+  /* 重置默认外观 */
+  -webkit-appearance: none;
+  /* 适用于 Safari 浏览器 */
+
+  width: 10px;
+  height: 10px;
+  border: 1px solid #133e9b;
+  border-radius: 50%;
+  /* 将边框设置为圆形 */
+
+  /* 修改选中状态下的样式 */
+  background-color: #fff;
+}
+
+.custom-checkbox:checked {
+
+  background-color: #071a5b;
+  font-style: 20px;
+  border:2px solid #f9f5f5;
+}
+.box_1{
+  position:absolute;
+  top: 100px;
+  left: 310px;
+  width: 220px;
+  height: 18px;
+  border-radius: 50px;
+  border: 1px solid #6eceeb;
+  font-size: 1px;
+  font-family:'kaiti';
+  background-color: #7b99b1;
+  color: #000!important;
+
+      /* 设置边框宽度为2px，颜色为红色 */
+}
+.box_1::placeholder {
+
+   color: #050505;
+   /* 设置 placeholder 的颜色为 #999 */
+}
+.box::placeholder{
+  color: #050505;
+}
+.box_2{
+  position: absolute;
+  top: 130px;
+  left: 310px;
+}
+.box_3{
+  position: absolute;
+  top: 160px;
+  left: 310px;
+}
+.box_4{
+  position: absolute;
+  top: 220px;
+  left: 310px;
+}
+.box_5{
+  position: absolute;
+  top: 250px;
+  left: 310px;;
+}
+.box{
+  width: 220px;
+      height: 18px;
+      border-radius: 50px;
+      border: 1px solid #6eceeb;
+      font-size: 1px;
+      color: #000;
+      font-family: 'kaiti';
+      background-color: #7b99b1;
+}
+.select_1{
+  position: absolute;
+  top: 190px;
+  left: 310px;
+  width: 225px;
+  height: 20px;
+  background-color: #f1f6fa;
+      border: 1px solid #6eceeb;
+      border-radius: 50px;
+      font-size: 8px;
+      font-weight: bold;
+      color: #78797a;
+      font-family: 'kaiti';
+
+}
+.button_1{
+position: absolute;
+top: 300px;
+left: 315px;
+height: 16px;
+width: 220px;
+background-color: #245c74;
+border: 1px solid #6eceeb;
+border-radius: 50px;
+font-size: 8px;
+  color: #52acf0;
+  font-family: '微圆幼圆';
+}
+.button_2{
+position: absolute;
+top: 250px;
+  left: 436px;
+  width: 100px;
+  height: 22px;
+  background-color: #245c74;
+      border: 1px solid #6eceeb;
+      border-radius: 50px;
+      font-size: 4px;
+      font-weight: bold;
+      color: #a3d3f7;
+      font-family: 'kaiti';
+      cursor: pointer;
+
+
+}
+.button_2:hover{
+border-color: #fbfcfd;
+background-color: #2b8ea0;
+color: #f5f1f1;
+}
+.image1{
+  position: absolute;
+  bottom: 50px;
+  left:70px;
+  width: 700px;
+  height: 8px;
+}
