@@ -13,23 +13,21 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-input v-model="sousuo" placeholder="请输入内容" style="width: 20%; margin-top: 10px;"></el-input>
-        <el-button icon="el-icon-search" circle style="margin-left: 0.5%;"></el-button>
+        <el-button @click="search" icon="el-icon-search" circle style="margin-left: 0.5%;"></el-button>
       </div>
     </el-header>
-    <el-alert
-      background-color="#fff"
-      title="这里是公告信息！！！！！！！！！！"
-      type="warning"
-      show-icon
-    ></el-alert>
+    <van-notice-bar
+  left-icon="volume-o"
+  :text=notice
+/>
     <el-main style="text-align: left;"> <!-- 修改样式为左对齐 -->
       <div style="width: 50%;margin: 0 auto;">
         <div style="margin-top: 1%;">
-          <el-radio v-model="radio" label="1">视频资源</el-radio>
-          <el-radio v-model="word" label="2">文档资源</el-radio>
+          <el-radio v-model="select" label="视频资源">视频资源</el-radio>
+          <el-radio v-model="select" label="文档资源">文档资源</el-radio>
         </div>
         <div style="margin-top: 1%;">
-          <el-select v-model="value" placeholder="请选择方向">
+          <el-select v-model="value" v-loading.fullscreen.lock="fullscreenLoading" placeholder="请选择方向" @change="handleDirectionChange">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -39,13 +37,13 @@
           </el-select>
         </div>
         <div style="margin-top: 1%;">
-          <el-card class="box-card">
+          <el-card class="box-card" v-for="item in paginatedData" :key="item.id">
             <div slot="header" class="clearfix">
-              <span>卡片名称</span>
-              <el-button style="float: right; padding: 3px 0" type="text">点击查看</el-button>
+              <span>{{ item.title }}</span>
+              <el-button @click="openLink(item.url)" style="float: right; padding: 3px 0" type="text">点击查看</el-button>
             </div>
             <div class="text item">
-             内容
+              {{ item.content }}
             </div>
           </el-card>
         </div>
@@ -53,10 +51,13 @@
     </el-main>
     <div style="margin-top: auto; text-align: center;">
       <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="1000"
-      ></el-pagination>
+      @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage1"
+        :page-size="pageSize"
+        layout="total, prev, pager, next"
+        :total="totalItems">
+    </el-pagination>
     </div>
   </el-container>
 </template>
@@ -65,9 +66,10 @@
 export default {
   data () {
     return {
+      notice: '暂无公告信息',
+      fullscreenLoading: false,
       sousuo: '',
-      radio: '',
-      word: '',
+      select: '',
       options: [
         {
           value: '前端',
@@ -86,10 +88,26 @@ export default {
           label: '设计'
         }
       ],
-      value: ''
+      value: '',
+      searchData: [], // 用于存储查询结果的数组
+      totalItems: 0, // 总条目数
+      currentPage1: 1, // 当前页码
+      pageSize: 5 // 每页显示的条目数
+    }
+  },
+  mounted () {
+    this.FindNotice()
+  },
+  computed: {
+    // 计算属性，用于根据当前页码和每页显示条目数获取分页后的数据
+    paginatedData () {
+      const start = (this.currentPage1 - 1) * this.pageSize
+      const end = start + this.pageSize
+      return this.searchData.slice(start, end)
     }
   },
   methods: {
+
     tologout () {
       this.$router.push('/LogIn')
     },
@@ -98,6 +116,95 @@ export default {
     },
     toAnnouncementPage () {
       this.$router.push('/AnnouncementPage')
+    },
+    handleDirectionChange () {
+      if (this.select === '') {
+        this.$notify.error({
+          title: '参数未选定',
+          message: '请先选择资源类型'
+        })
+        this.value = ''
+      } else {
+        this.FindContent()
+      }
+    },
+    async FindContent () {
+      this.fullscreenLoading = true
+      const params = {
+        type: this.select,
+        directiontype: this.value
+      }
+      this.searchData = []
+      const response = await this.$http.post('/api/users/FinduserResouce', params)
+      const code = response.data.code
+      const data = response.data.data
+      this.fullscreenLoading = false
+      if (code === 200) {
+        this.searchData = data // 存储查询结果
+        this.totalItems = this.searchData.length
+        this.$notify({
+          title: '查询成功',
+          message: '这是一条查询成功的提示消息',
+          type: 'success'
+        })
+      } else {
+        this.$notify.error({
+          title: '数据查询失败',
+          message: data
+        })
+      }
+      this.value = ''
+      this.select = ''
+    },
+    openLink (url) {
+    // 在新标签页中打开链接
+      window.open(url, '_blank')
+    },
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
+    },
+    async search () {
+      this.searchData = []
+      this.fullscreenLoading = true
+      const params = {
+        content: this.sousuo
+      }
+      const response = await this.$http.post('/api/users/SearchResouce', params)
+      const code = response.data.code
+      const data = response.data.data
+      this.fullscreenLoading = false
+      if (code === 200) {
+        this.searchData = data // 存储查询结果
+        this.totalItems = this.searchData.length
+        this.$notify({
+          title: '查询成功',
+          message: '这是一条查询成功的提示消息',
+          type: 'success'
+        })
+      } else {
+        this.$notify.error({
+          title: '数据查询失败',
+          message: data
+        })
+      }
+      this.value = ''
+      this.select = ''
+    },
+    async FindNotice () {
+      const response = await this.$http.post('/api/users/FindNotice')
+      const code = response.data.code
+      const data = response.data.data[0].notice
+      if (code === 200) {
+        this.notice = data // 存储查询结果
+      } else {
+        this.$notify.error({
+          title: '公告查询失败',
+          message: data
+        })
+      }
     }
   }
 }
@@ -141,4 +248,8 @@ export default {
 .el-dropdown-item {
   text-decoration: none !important;
 }
+.box-card {
+  margin-bottom: 10px; /* 设置卡片之间的底部间距为20px */
+}
+
 </style>

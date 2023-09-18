@@ -17,8 +17,8 @@
     </div>
     <!-- 登录 -->
     <div class="wz" v-if="showLogin">
-      <el-input class="rounded-input" style="margin-bottom: 15%;" v-model="input" placeholder="请输入邮箱" ></el-input>
-      <el-input class="rounded-input" v-model="input" style="margin-bottom: 20%;" placeholder="请输入密码" ></el-input>
+      <el-input class="rounded-input" style="margin-bottom: 15%;" v-model="email" placeholder="请输入邮箱" ></el-input>
+      <el-input class="rounded-input" v-model="password" style="margin-bottom: 20%;" placeholder="请输入密码" ></el-input>
       <button class="rounded-button" type="primary" plain @click="login">登录</button>
     </div>
     <!-- 注册 -->
@@ -69,12 +69,29 @@ export default {
       value: '',
       radio: '1',
       input: '',
+      email: '',
+      password: '',
       showLogin: true // 控制登录内容的显示
     }
   },
   methods: {
-    login () {
-      this.$router.push('/HomePage')
+    async login () {
+      const params = {
+        email: this.email,
+        password: this.password
+      }
+      const response = await this.$http.post('/api/login', params)
+      const code = response.data.code
+      const token = response.data.data
+      if (code === 200) {
+        window.localStorage.setItem('token', token)
+        this.$router.push('/HomePage')
+      } else {
+        this.$notify.error({
+          title: '登录失败',
+          message: '密码错误'
+        })
+      }
     },
     toggleContent () {
       // 点击注册按钮时切换显示的内容
