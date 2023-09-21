@@ -5,11 +5,25 @@ import router from './router'
 import './assets/css/global.css'
 // 引入所有的ElementUI组件库
 import ElementUI from 'element-ui'
+import axios from 'axios'
 // 引入ElementUI样式
 import 'element-ui/lib/theme-chalk/index.css'
 
+Vue.prototype.$http = axios
+// 配置URL
+axios.defaults.baseURL = 'http://150.158.53.178:6290'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+// 配置token
+axios.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer ${window.localStorage.getItem('token')}`
+  return config
+}, error => {
+  error.data = {
+    message: '服务器异常~'
+  }
+  return Promise.reject(error)
+})
 
 new Vue({
   router,
