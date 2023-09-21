@@ -98,13 +98,8 @@ export default {
       }
       this.$emit('success', '校验成功！')
       console.log('当前邮箱号合法！！')
-      Message.success('注册成功！！！！！！')
-      this.input1 = ''
-      this.input2 = ''
-      this.input3 = ''
-      this.input5 = ''
       // this.$router.push('/HomePage')不应该跳转到写一个页面了
-      const { data: res } = await this.$http.post('http://dev-cn.your-api-server.com/api/register',
+      const { data: res } = await this.$http.post('http://150.158.53.178:6290/api/register',
         {
           email: this.input1,
           username: this.input2,
@@ -112,11 +107,14 @@ export default {
           position: this.value,
           password: this.input5
         })
-      console.log(res)
       try {
         console.log(res)
       } catch (error) {
         console.error(error)
+      }
+      if (res.code === 200) {
+        Message.success('注册成功！！！！！！')
+        this.showLogin = !this.showLogin
       }
     },
     vaildFn () {
