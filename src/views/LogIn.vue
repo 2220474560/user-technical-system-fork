@@ -12,7 +12,7 @@
       <h1 class="title">信 息 分 享 中 心</h1>
     </div>
     <div class="radio1">
-      <el-radio v-model="radio" label="1" @change="toggleContent">登录</el-radio>
+      <el-radio v-model="radio" label="1" @change="toggleContent" >登录</el-radio>
       <el-radio v-model="radio" label="2" @change="toggleContent">注册</el-radio>
     </div>
     <!-- 登录 -->
@@ -23,11 +23,11 @@
     </div>
     <!-- 注册 -->
     <div class="wz" v-else>
-      <el-input class="rounded-input" v-model="input" placeholder="请输入邮箱">
+      <el-input class="rounded-input" v-model="input1" placeholder="请输入邮箱">
       </el-input>
-      <el-input class="rounded-input" v-model="input" placeholder="请输入姓名">
+      <el-input class="rounded-input" v-model="input2" placeholder="请输入姓名">
       </el-input>
-      <el-input class="rounded-input" v-model="input" placeholder="请输入专业班级">
+      <el-input class="rounded-input" v-model="input3" placeholder="请输入专业班级">
       </el-input>
       <el-select class="selectStyle" v-model="value" placeholder="请选择">
     <el-option
@@ -37,9 +37,8 @@
       :value="item.value">
     </el-option>
   </el-select>
-  <el-input class="rounded-input" v-model="input" placeholder="请输入密码">
-      </el-input>
-      <el-input class="rounded-input" v-model="input" placeholder="请输入验证码">
+  <!-- 密码 -->
+  <el-input class="rounded-input" v-model="input5" placeholder="请输入密码">
       </el-input>
       <button class="rounded-button" type="primary" plain @click="login">注册</button>
       </div>
@@ -50,6 +49,7 @@
 </template>
 
 <script>
+import { Message } from 'element-ui'
 export default {
   data () {
     return {
@@ -96,6 +96,7 @@ export default {
     // }
   }
 }
+
 </script>
 
 <style scoped>

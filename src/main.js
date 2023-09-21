@@ -5,6 +5,7 @@ import router from './router'
 import './assets/css/global.css'
 // 引入所有的ElementUI组件库
 import ElementUI from 'element-ui'
+import axios from 'axios'
 // 引入ElementUI样式
 import 'element-ui/lib/theme-chalk/index.css'
 // 引入axios
