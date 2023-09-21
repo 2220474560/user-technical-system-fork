@@ -17,6 +17,9 @@
     </div>
     <!-- 登录 -->
     <div class="wz" v-if="showLogin">
+      <el-input class="rounded-input" style="margin-bottom: 15%;" v-model="inputEmial" placeholder="请输入邮箱" ></el-input>
+      <el-input class="rounded-input" v-model="inputPassword" style="margin-bottom: 20%;" placeholder="请输入密码" ></el-input>
+      <button class="rounded-button" type="primary" plain @click="login">登录</button>
     </div>
     <!-- 注册 -->
     <div class="wz" v-else>
@@ -65,6 +68,25 @@ export default {
       }],
       value: '',
       radio: '1',
+      inputEmial: '',
+      inputPassword: '',
+      showLogin: true // 控制登录内容的显示
+    }
+  },
+  methods: {
+    async login () {
+      console.log(this.inputEmial)
+      console.log(this.inputPassword)
+      const { data: res } = await this.$http.post('/api/login', {
+        email: this.inputEmial,
+        password: this.inputPassword
+      })
+      console.log(res)
+      if (res.code === 200) {
+        window.localStorage.setItem('token', res.data)
+        this.$router.push('/HomePage')
+      }
+    },
     toggleContent () {
       // 点击注册按钮时切换显示的内容
       this.showLogin = !this.showLogin
