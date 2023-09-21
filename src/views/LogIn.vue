@@ -17,10 +17,6 @@
     </div>
     <!-- 登录 -->
     <div class="wz" v-if="showLogin">
-      <el-input class="rounded-input" style="margin-bottom: 15%;" v-model="email"  placeholder="请输入邮箱" ></el-input>
-      <el-input class="rounded-input" v-model="password" style="margin-bottom: 20%;" placeholder="请输入密码" ></el-input>
-      <button class="rounded-button" type="primary" plain @click="getPostData">登录</button>
-      <p v-if="loginError" class="error-message">{{ loginErrorMessage }}</p>
     </div>
     <!-- 注册 -->
     <div class="wz" v-else>
@@ -72,18 +68,6 @@ export default {
       value: '',
       radio: '1',
       input: '',
-      showLogin: true,
-      password: '',
-      email: ''
-    }
-  },
-  methods: {
-    async getPostData () {
-      const { data: res } = await this.$axios.post('http://150.158.53.178:6290/api/login', {
-        email: this.email,
-        password: this.password
-      })
-      console.log(res)
     },
     async login () {
       // 添加验证逻辑
