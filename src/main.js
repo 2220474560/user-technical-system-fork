@@ -8,19 +8,9 @@ import ElementUI from 'element-ui'
 import axios from 'axios'
 // 引入ElementUI样式
 import 'element-ui/lib/theme-chalk/index.css'
-
+import axios from 'axios'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-// 配置token
-axios.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${window.localStorage.getItem('token')}`
-  return config
-}, error => {
-  error.data = {
-    message: '服务器异常~'
-  }
-  return Promise.reject(error)
-})
 
 new Vue({
   router,

@@ -20,11 +20,11 @@
     </div>
     <!-- 注册 -->
     <div class="wz" v-else>
-      <el-input class="rounded-input" v-model="input" placeholder="请输入邮箱">
+      <el-input class="rounded-input" v-model="input1" placeholder="请输入邮箱">
       </el-input>
-      <el-input class="rounded-input" v-model="input" placeholder="请输入姓名">
+      <el-input class="rounded-input" v-model="input2" placeholder="请输入姓名">
       </el-input>
-      <el-input class="rounded-input" v-model="input" placeholder="请输入专业班级">
+      <el-input class="rounded-input" v-model="input3" placeholder="请输入专业班级">
       </el-input>
       <el-select class="selectStyle" v-model="value" placeholder="请选择">
     <el-option
@@ -34,9 +34,8 @@
       :value="item.value">
     </el-option>
   </el-select>
-  <el-input class="rounded-input" v-model="input" placeholder="请输入密码">
-      </el-input>
-      <el-input class="rounded-input" v-model="input" placeholder="请输入验证码">
+  <!-- 密码 -->
+  <el-input class="rounded-input" v-model="input5" placeholder="请输入密码">
       </el-input>
       <button class="rounded-button" type="primary" plain @click="login">注册</button>
       </div>
@@ -47,11 +46,10 @@
 </template>
 
 <script>
+import { Message } from 'element-ui'
 export default {
   data () {
     return {
-      loginError: false, // 是否显示错误提示
-      loginErrorMessage: '', // 登录错误提示消息
       options: [{
         value: '前端',
         label: '前端'
@@ -67,16 +65,6 @@ export default {
       }],
       value: '',
       radio: '1',
-      input: '',
-    },
-    async login () {
-      // 添加验证逻辑
-      if (this.email === '' || this.password === '') {
-        this.loginError = true
-        this.loginErrorMessage = '邮箱和密码不能为空'
-      }
-    },
-    // 发送登录请求
     toggleContent () {
       // 点击注册按钮时切换显示的内容
       this.showLogin = !this.showLogin
@@ -86,6 +74,7 @@ export default {
     // }
   }
 }
+
 </script>
 
 <style scoped>
