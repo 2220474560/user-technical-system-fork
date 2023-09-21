@@ -9,9 +9,6 @@ import axios from 'axios'
 // 引入ElementUI样式
 import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.prototype.$http = axios
-// 配置URL
-axios.defaults.baseURL = 'http://150.158.53.178:6290'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 // 配置token
