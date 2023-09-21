@@ -35,10 +35,6 @@
             <input class="box_4 box"  type="text" v-model="account"  placeholder="请输入密码" autofocus>
         </div>
         <!-- 按钮 -->
-        <div id="input_box">
-            <input class="box_5 box"  type="text" v-model="account"  placeholder="请输入验证码" autofocus>
-            <button class="button_2">获取验证码</button>
-        </div>
         <div class="button_1">注 册</div>
          <img class="image1" alt="signin" src="../assets/images/copy-right.png">
       </div>
