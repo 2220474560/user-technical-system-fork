@@ -12,14 +12,11 @@
       <h1 class="title">信 息 分 享 中 心</h1>
     </div>
     <div class="radio1">
-      <el-radio v-model="radio" label="1" @change="toggleContent">登录</el-radio>
+      <el-radio v-model="radio" label="1" @change="toggleContent" >登录</el-radio>
       <el-radio v-model="radio" label="2" @change="toggleContent">注册</el-radio>
     </div>
     <!-- 登录 -->
     <div class="wz" v-if="showLogin">
-      <el-input class="rounded-input" style="margin-bottom: 15%;" v-model="input" placeholder="请输入邮箱" ></el-input>
-      <el-input class="rounded-input" v-model="input" style="margin-bottom: 20%;" placeholder="请输入密码" ></el-input>
-      <button class="rounded-button" type="primary" plain @click="login">登录</button>
     </div>
     <!-- 注册 -->
     <div class="wz" v-else>
@@ -53,8 +50,6 @@ import { Message } from 'element-ui'
 export default {
   data () {
     return {
-      // 注册的时候前端发给后端的东西
-      // 下拉框的数据传送
       options: [{
         value: '前端',
         label: '前端'
@@ -70,60 +65,6 @@ export default {
       }],
       value: '',
       radio: '1',
-      input1: '',
-      input2: '',
-      input3: '',
-      input5: '',
-      showLogin: true // 控制登录内容的显示
-    }
-  },
-  methods: {
-    async login () {
-      const account = this.input1
-      const name = this.input2
-      const class1 = this.input3
-      const option = this.value
-      const password = this.input5
-      // 判断账号和密码是否为空
-      if (account.trim() === '' || password.trim() === '' || name.trim() === '' || option.trim() === '' || class1.trim() === '') {
-        // 如果账号或密码为空，则触发错误事件并给出相应提示
-        console.log('信息不能为空！')
-        Message.error('信息不能为空！！！')
-        return
-      }
-      if (!this.vaildFn()) {
-        this.$emit('error', '校验失败！')
-        console.log('当前邮箱号不合法！！')
-        return
-      }
-      this.$emit('success', '校验成功！')
-      console.log('当前邮箱号合法！！')
-      // this.$router.push('/HomePage')不应该跳转到写一个页面了
-      const { data: res } = await this.$http.post('http://150.158.53.178:6290/api/register',
-        {
-          email: this.input1,
-          username: this.input2,
-          class: this.input3,
-          position: this.value,
-          password: this.input5
-        })
-      try {
-        console.log(res)
-      } catch (error) {
-        console.error(error)
-      }
-      if (res.code === 200) {
-        Message.success('注册成功！！！！！！')
-        this.showLogin = !this.showLogin
-      }
-    },
-    vaildFn () {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.input1)) {
-        return false
-      }
-      return true
-    },
-
     toggleContent () {
       // 点击注册按钮时切换显示的内容
       this.showLogin = !this.showLogin

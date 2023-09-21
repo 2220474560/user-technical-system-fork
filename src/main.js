@@ -5,12 +5,12 @@ import router from './router'
 import './assets/css/global.css'
 // 引入所有的ElementUI组件库
 import ElementUI from 'element-ui'
+import axios from 'axios'
 // 引入ElementUI样式
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-Vue.prototype.$http = axios
 
 new Vue({
   router,
